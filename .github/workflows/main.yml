@@ -1,0 +1,23 @@
+name: CI Pipeline
+
+# Se ejecuta cada vez que haces un push a la rama 'main'
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    # 1. Bajamos tu código al servidor de GitHub
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    # 2. Preparamos Docker
+    - name: Build Docker Image
+      run: docker build -t weather-api .
+
+    # 3. Probamos que la imagen se haya construido correctamente
+    - name: List images
+      run: docker images
